@@ -23,6 +23,8 @@ heading in the format (6, 4) NORTH
 
 # Installation
 Please run the below command to run the test cases
+mvn test
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
