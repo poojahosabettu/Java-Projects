@@ -25,16 +25,16 @@ public class MarsRover {
 
 	private void execute(char command) throws BadCommandException {
 		switch (command) {
-		case 'F':
+		case BaseConstants.FORWARD:
 			this.coordinate.moveForward();
 			break;
-		case 'B':
+		case BaseConstants.BACKWARD:
 			this.coordinate.moveBackWard();
 			break;
-		case 'L':
+		case BaseConstants.LEFT:
 			this.coordinate.rotateLeft();
 			break;
-		case 'R':
+		case BaseConstants.RIGHT:
 			this.coordinate.rotateRight();
 
 			break;
