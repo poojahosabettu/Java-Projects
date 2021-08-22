@@ -34,5 +34,6 @@ Please make sure to update tests as appropriate.
 
 ## Tech Stack
 Java 8
-Maven
+
+Maven (Build tool)
 
