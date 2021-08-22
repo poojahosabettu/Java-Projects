@@ -23,6 +23,7 @@ heading in the format (6, 4) NORTH
 
 # Installation
 Please run the below command to run the test cases
+
 mvn test
 
 
