@@ -16,6 +16,6 @@ public class App
     	String sourceNodeId =  args[0].toString();
         String destinationNodeId = args[1].toString();
         dataFetchService.parseBPMN();
-        dataFetchService.findPath(sourceNodeId,destinationNodeId);
+        dataFetchService.findPathDFS(sourceNodeId, destinationNodeId);
     }
 }
