@@ -97,4 +97,14 @@ The algorithm used for solving the Package challenge is a typical 0/1 knapsack p
 
 Taking the SOLID design practice into account while designing this project , utilising Singleton as one of primary design patterns into account for various services.
 
-##
+## Cloning the project 
+
+Use the below command to clone the projects under Java Projects folder, import PackageChallenge project into your respective workspace to start processing 
+
+git clone https://github.com/poojahosabettu/Java-Projects.git
+
+## Processing 
+
+You can run your file processing by running this project on configuration by configuring the necessary file path for processing.
+
+
