@@ -4,6 +4,6 @@ import com.packageChallenge.files.domain.PackageFile;
 
 public interface FileProcessorService {
 
-	void processFile(PackageFile packageFile);
+	String processFile(PackageFile packageFile);
 
 }

@@ -9,19 +9,17 @@ import com.packageChallenge.files.services.impl.PackageItemFileReaderServiceImpl
 
 public class PackageChallengeStarter {
 	
-	private static FileReaderService fileProcessorService =  PackageItemFileReaderServiceImpl.getInstace();
-	private static FileProcessorService packageProcessService =  PackageFileProcessorServiceImpl.getInstance();
+	private static FileReaderService fileReaderService =  PackageItemFileReaderServiceImpl.getInstance();
+	private static FileProcessorService  fileProcessorService =  PackageFileProcessorServiceImpl.getInstance();
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws PackageChallengeBusinessException {
 		String fileName = args[0];
 		try {
-			PackageFile packageFile =  fileProcessorService.readFile(fileName);
-			packageProcessService.processFile(packageFile);
+			PackageFile packageFile =  fileReaderService.readFile(fileName);
+			System.out.println(fileProcessorService.processFile(packageFile));
 		} catch (PackageChallengeBusinessException e) {
-			e.printStackTrace();
+			throw new PackageChallengeBusinessException(e.getMessage());
 		}
 	}
-	
-	
 
 }

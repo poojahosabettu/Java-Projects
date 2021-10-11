@@ -29,15 +29,15 @@ public class PackageFileProcessorServiceImpl implements FileProcessorService {
 	
 
 	@Override
-	public void processFile(PackageFile packageFile) {
-		for(ProcessPerRow processPerRow:packageFile.getProcessPerRow()) {
-			processPackage(processPerRow);
-		}
+	public String processFile(PackageFile packageFile) {
+		return packageFile.getProcessPerRow().stream().
+				map(perRow ->processPackage(perRow)).
+				collect(Collectors.joining("\n"));
 		
 	}
 
-	private void processPackage(ProcessPerRow processPerRow) {
-		int weight = round(processPerRow.getWeightLimit());
+	private String processPackage(ProcessPerRow processPerRow) {
+		int weight = roundValue(processPerRow.getWeightLimit());
 		int size = processPerRow.getLineItems().size();
 		
 		BigDecimal[][] cost = new BigDecimal[size+1][weight+1];
@@ -48,11 +48,8 @@ public class PackageFileProcessorServiceImpl implements FileProcessorService {
 			return i1.getWeight().compareTo(i2.getWeight());
 		});
 		
-		//Collections.reverse(processPerRow.getLineItems());
-		
 		List<LineItem> lineItems = processPerRow.getLineItems();
 		
-		System.out.println(processPerRow.getLineItems());
 		
 		for(int i = 0;i<=size;++i) {
 			for(int j = 0;j<=weight;++j) {
@@ -62,59 +59,47 @@ public class PackageFileProcessorServiceImpl implements FileProcessorService {
 					LineItem lineItem = lineItems.get(i-1);
 					cost[i][j] = cost[i-1][j];
 					if(lineItem.getWeight().compareTo(new BigDecimal(j))<=0) {
-						BigDecimal currentValue = cost[i-1][j - round(lineItem.getWeight())].add(lineItem.getCost());
+						BigDecimal currentValue = cost[i-1][j - roundValue(lineItem.getWeight())].add(lineItem.getCost());
 						cost[i][j] = currentValue.compareTo(cost[i][j])>0?currentValue:cost[i][j];
 					}
 				}
 			}
 		}
-		
-		
-		weight = round(processPerRow.getWeightLimit());
-		
-		BigDecimal res = cost[size][weight];
+		return displayLineItems(extractLineItems(processPerRow, size, cost, lineItems));
+	}
 
-		//System.out.println("Cost is "+res);
-		
-		List<Integer> indexes = new ArrayList<>();
-		
-		/*for(int i = size;i>0 && res.compareTo(BigDecimal.ZERO)>0;--i) {
-			if(res == cost[i-1][weight])
-				continue;
-			else {
-				indexes.add(lineItems.get(i-1).getIndex());
-				res = res.subtract(lineItems.get(i-1).getCost());
-				weight -= round(lineItems.get(i-1).getWeight());
-			}
-		}*/
-		
-		int i = size;
-		while (res != null && res.compareTo(BigDecimal.ZERO) > 0 && i>0) {
-
-			if (cost[i][weight] != cost[i - 1][weight]) {
-				LineItem item = lineItems.get(i - 1);
-
-				weight -= round(item.getWeight());
-				indexes.add(item.getIndex());
-			}
-			res = cost[i][weight];
-			i--;
-			
-		}
-
-		
+	private String displayLineItems(List<Integer> indexes) {
 		String result =
                 indexes.stream()
                         .sorted().map(index -> String.valueOf(index))
                         .collect(Collectors.joining(","));
 		result =  result.isEmpty() ? "-" : result;
+		return result;
+	}
+
+	private List<Integer> extractLineItems(ProcessPerRow processPerRow, int size, BigDecimal[][] cost,
+			List<LineItem> lineItems) {
 		
-		System.out.println(result);
+		int weight = roundValue(processPerRow.getWeightLimit());
 		
+		BigDecimal res = cost[size][weight];
 		
+		List<Integer> indexes = new ArrayList<>();
+		
+		for (int i = size;res != null && res.compareTo(BigDecimal.ZERO) > 0 && i>0 ;--i) {
+			if (cost[i][weight] != cost[i - 1][weight]) {
+				LineItem item = lineItems.get(i - 1);
+
+				weight -= roundValue(item.getWeight());
+				indexes.add(item.getIndex());
+			}
+			res = cost[i][weight];
+			
+		}
+		return indexes;
 	}
 	
-	private static int round(BigDecimal value) {
+	private static int roundValue(BigDecimal value) {
 		return value.setScale(0, RoundingMode.HALF_UP).intValue();
 	}
 

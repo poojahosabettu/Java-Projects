@@ -13,17 +13,21 @@ import com.packageChallenge.domain.LineItem;
 import com.packageChallenge.domain.ProcessPerRow;
 import com.packageChallenge.files.domain.PackageFile;
 import com.packageChallenge.files.services.FileReaderService;
-import com.packageChallenge.files.utils.PackageValidator;
+import com.packageChallenge.files.services.FileValidatorService;
 
 public class PackageItemFileReaderServiceImpl implements FileReaderService {
 	
+	public static final String INCORRECT_TOTAL_WEIGHT_FORMAT = "Incorrect format of total weight for a package";
+	public static final String INCORRECT_FORMAT_OF_DATA = "Could not find items in the format required";
+	public static final String EMPTY_FILE_PATH = "The file path is empty, cannot be processed futher";
 	private static PackageItemFileReaderServiceImpl fileReaderServiceImpl = null;
+	private FileValidatorService fileValidatorService = PackageValidatorServiceImpl.getInstance();
 	
 	private PackageItemFileReaderServiceImpl() {
 		
 	}
 	
-	public static PackageItemFileReaderServiceImpl getInstace() {
+	public static PackageItemFileReaderServiceImpl getInstance() {
 		if(fileReaderServiceImpl == null)
 			fileReaderServiceImpl = new PackageItemFileReaderServiceImpl();
 		return fileReaderServiceImpl;
@@ -31,12 +35,11 @@ public class PackageItemFileReaderServiceImpl implements FileReaderService {
 	
 	public PackageFile readFile(String fileName) throws PackageChallengeBusinessException {
 		if(fileName == null || fileName.isEmpty())
-			throw new PackageChallengeBusinessException("The file path is empty, cannot be processed futher");
+			throw new PackageChallengeBusinessException(EMPTY_FILE_PATH);
 		PackageFile packageFile = new PackageFile();
 		
 		try (FileReader file = new FileReader(fileName); BufferedReader reader = new BufferedReader(file)) {
 			String row;
-			int index = 0;
 			while ((row = reader.readLine()) != null) {
 				if(!row.isEmpty()) {
 					String[] rowData = row.trim().split(":");
@@ -44,7 +47,6 @@ public class PackageItemFileReaderServiceImpl implements FileReaderService {
 				}
 			}
 		} catch (Exception e) {
-			e.getStackTrace();
 			throw new PackageChallengeBusinessException(e.getMessage());
 		}
 	
@@ -53,12 +55,14 @@ public class PackageItemFileReaderServiceImpl implements FileReaderService {
 	}
 	private ProcessPerRow parRowItems(String[] rowData) throws PackageChallengeBusinessException {
 		ProcessPerRow perRow = new ProcessPerRow();
+		if(!rowData[0].trim().matches("[0-9]*"))
+			throw new PackageChallengeBusinessException(INCORRECT_TOTAL_WEIGHT_FORMAT);
 		perRow.setWeightLimit(BigDecimal.valueOf(Double.valueOf(rowData[0].trim())));
 		perRow.getLineItems().addAll(parseLineItems(rowData));
-		PackageValidator.valdate(perRow);
+		fileValidatorService.valdate(perRow);
 		return perRow;
 	}
-	//Needs reforming
+	
 	private List<LineItem> parseLineItems(String[] rowData) throws PackageChallengeBusinessException {
 		Pattern pattern = Pattern.compile("(\\d+),(\\d+.*\\d+),€(\\d+)");
 		String[] lineItemString = rowData[1].trim().split("\\)\\s*\\(");
@@ -74,7 +78,7 @@ public class PackageItemFileReaderServiceImpl implements FileReaderService {
 				lineItems.add(lineItem);
 				
 			} else {
-				throw new PackageChallengeBusinessException("Could not find items in the format required");
+				throw new PackageChallengeBusinessException(INCORRECT_FORMAT_OF_DATA);
 			}
 		}
 
