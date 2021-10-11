@@ -89,6 +89,9 @@ The sample output for the sample input file above should look like this:
 The appoach used to solve the problem is divided into 2 phases:
   1. Parse the given file to validated the file and its data 
   2. Process the data obtained from the file using the algorithm discussed below.
+
+
+
 The algorithm used for solving the Package challenge is a typical 0/1 knapsack problem. The algorithm itself is divided into 2 parts:
   1. 0/1 Knapsack problem to find the optimal solution of maximized cost.
   2. Use the solution from above to backtrack to find the indexes used to reach the solution.
