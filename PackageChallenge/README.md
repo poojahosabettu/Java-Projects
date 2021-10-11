@@ -87,7 +87,7 @@ The sample output for the sample input file above should look like this:
 ## Overall approach and Algorithm
 
 The appoach used to solve the problem is divided into 2 phases:
-  1. Parse the given file to validated the file and its data 
+  1. Parse the given file to validated the file and its data. It follows a all or none method for process, i.e., if an invalid data is encountered for any of the rows to be          processed then none of the processing rows will be processed further.
   2. Process the data obtained from the file using the algorithm discussed below.
 
 
