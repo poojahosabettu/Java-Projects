@@ -97,4 +97,6 @@ The algorithm used for solving the Package challenge is a typical 0/1 knapsack p
 
 Taking the SOLID design practice into account while designing this project , utilising Singleton as one of primary design patterns into account for various services.
 
+##
+
 
