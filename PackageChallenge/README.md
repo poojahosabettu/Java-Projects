@@ -128,7 +128,7 @@ Run the below command for maven build and run test files
 
 mvn clean install
 
-## Sample Output
+## Output from code
 
 ![Screenshot](OutputGeneratedForInputFile.png)
 
