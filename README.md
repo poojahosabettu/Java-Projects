@@ -1,3 +1,1 @@
-# Java-Projects
-
-Collection of Java projects
+# Package Challenge 
