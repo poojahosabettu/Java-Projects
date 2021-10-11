@@ -121,6 +121,12 @@ The below tech stack are used for building the project
   2. Eclipse
   3. Java 8
 
+## Build and test
+
+Run the below command for maven build and run test files
+
+mvn clean install
+
 
 
 
