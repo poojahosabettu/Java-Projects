@@ -111,6 +111,13 @@ The processing begins from the PackageChallengeStarter.java file, which take one
 
 java PackageChallengeStarter "{Write your file name here}"
 
+## Tech Stack
+
+The below tech stack are used for building the project 
+  1. Maven
+  2. Eclipse
+  3. Java 8
+
 
 
 
