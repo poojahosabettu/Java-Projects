@@ -1,3 +1,3 @@
-# Java-Projects
+# Java projects
 
-Collection of Java projects
+Collection of Java projects 
