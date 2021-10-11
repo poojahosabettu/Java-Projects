@@ -120,6 +120,7 @@ The below tech stack are used for building the project
   1. Maven
   2. Eclipse
   3. Java 8
+  4. JUnit (For Test coverage)
 
 ## Build and test
 
