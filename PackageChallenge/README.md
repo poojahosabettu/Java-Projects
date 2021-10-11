@@ -128,9 +128,9 @@ Run the below command for maven build and run test files
 
 mvn clean install
 
-## Sample input
-PackageChallenge/src/main/resources/OutputGeneratedForInputFile.png
-![Generated output from code ](PackageChallenge/src/main/resources/OutputGeneratedForInputFile.png)\
+## Sample Output
+
+![Screenshot](OutputGeneratedForInputFile.png)
 
 
 
