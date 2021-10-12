@@ -116,6 +116,7 @@ PackageChallengeStarter "{Write your file name here}"
 Run the above starter file with a filename parameter.
 
 Ex :
+![RunConfiguration](RunConfiguration.png)
 
 ## Tech Stack
 
