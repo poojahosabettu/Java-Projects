@@ -111,8 +111,11 @@ git clone https://github.com/poojahosabettu/Java-Projects.git
 You can run your file processing by running this project on configuration by configuring the necessary file path for processing.
 
 The processing begins from the PackageChallengeStarter.java file, which take one command line paramneter which will be read as filename for package processing.
+PackageChallengeStarter "{Write your file name here}"
 
-java PackageChallengeStarter "{Write your file name here}"
+Run the above starter file with a filename parameter.
+
+Ex :
 
 ## Tech Stack
 
