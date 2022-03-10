@@ -96,9 +96,6 @@ The algorithm used for solving the Package challenge is a typical 0/1 knapsack p
   1. 0/1 Knapsack problem to find the optimal solution of maximized cost.
   2. Use the solution from above to backtrack to find the indexes used to reach the solution.
 
-## Design pattern and coding practice
-
-Taking the SOLID design practice into account while designing this project , utilising Singleton as one of primary design patterns into account for various services.
 
 ## Cloning the project 
 
